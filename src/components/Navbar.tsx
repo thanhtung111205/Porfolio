@@ -90,7 +90,7 @@ export default function Navbar() {
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 group-hover:opacity-90 transition-opacity" />
               <span className="relative flex items-center justify-center gap-2 font-mono">
                 <Mail className="w-3.5 h-3.5" />
-                Contact Me
+                Liên Hệ Ngay
               </span>
             </a>
           </div>
@@ -99,7 +99,7 @@ export default function Navbar() {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 text-slate-300 hover:text-cyan-400 focus:outline-none"
-            aria-label="Toggle menu"
+            aria-label="Chuyển đổi menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -137,7 +137,7 @@ export default function Navbar() {
                   className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-semibold text-sm shadow-lg shadow-cyan-500/20"
                 >
                   <Mail className="w-4 h-4" />
-                  Contact Me
+                  Liên Hệ Ngay
                 </a>
               </div>
             </div>

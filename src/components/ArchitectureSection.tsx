@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Network, Server, Shield, Cpu, Cloud, Database, Lock, Zap, RefreshCw, Terminal, Layers } from 'lucide-react';
+import { Network, Server, Database, Cpu, Terminal, Layers } from 'lucide-react';
 
 const archLayers = [
   {
@@ -45,9 +45,9 @@ export default function ArchitectureSection() {
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-purple-500/30 text-purple-300 text-xs font-mono backdrop-blur-md"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-purple-500/40 text-purple-300 text-xs sm:text-sm font-mono backdrop-blur-md"
           >
-            <Layers className="w-3.5 h-3.5 text-purple-400" />
+            <Layers className="w-4 h-4 text-purple-400" />
             <span>Phân Tích Kiến Trúc Kỹ Thuật</span>
           </motion.div>
 
@@ -56,7 +56,7 @@ export default function ArchitectureSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight"
+            className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight"
           >
             19 Cloud-Native Services &{' '}
             <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
@@ -69,7 +69,7 @@ export default function ArchitectureSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base"
+            className="text-slate-300 max-w-2xl mx-auto text-base sm:text-lg font-light"
           >
             Mô hình phân tầng hệ thống chịu tải cao, sẵn sàng Auto-scale và duy trì chi phí tối thiểu theo thời gian thực.
           </motion.p>
@@ -86,35 +86,35 @@ export default function ArchitectureSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="p-6 rounded-2xl bg-slate-950/70 border border-slate-800/80 backdrop-blur-xl hover:border-cyan-500/40 transition-all duration-300 flex flex-col justify-between group"
+                className="p-6 rounded-2xl bg-slate-950/80 border border-slate-800 backdrop-blur-xl hover:border-cyan-500/50 transition-all duration-300 flex flex-col justify-between group"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-cyan-400 group-hover:scale-110 transition-transform">
                       <Icon className={`w-6 h-6 ${layer.accent}`} />
                     </div>
-                    <span className="text-[10px] font-mono text-slate-400 bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
-                      Layer 0{idx + 1}
+                    <span className="text-xs font-mono text-slate-300 bg-slate-900 px-2.5 py-0.5 rounded border border-slate-800 font-semibold">
+                      Phân Tầng 0{idx + 1}
                     </span>
                   </div>
 
                   <div>
-                    <h3 className="text-base font-bold text-white group-hover:text-cyan-300 transition-colors">
+                    <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-cyan-300 transition-colors">
                       {layer.title}
                     </h3>
-                    <div className="text-xs font-mono text-cyan-400/90 mt-0.5">
+                    <div className="text-xs sm:text-sm font-mono text-cyan-300 font-medium mt-0.5">
                       {layer.tech}
                     </div>
                   </div>
 
-                  <p className="text-xs text-slate-300 leading-relaxed font-light">
+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
                     {layer.desc}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-900 mt-4 flex items-center justify-between text-[11px] font-mono text-slate-400">
-                  <span>High Availability</span>
-                  <span className="text-emerald-400">99.99%</span>
+                <div className="pt-4 border-t border-slate-900 mt-4 flex items-center justify-between text-xs font-mono text-slate-300">
+                  <span>Độ Sẵn Sàng Sàn</span>
+                  <span className="text-emerald-400 font-bold">99.99%</span>
                 </div>
               </motion.div>
             );
@@ -126,33 +126,33 @@ export default function ArchitectureSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="rounded-3xl bg-slate-950 border border-slate-800/90 p-6 sm:p-8 backdrop-blur-2xl shadow-2xl font-mono text-xs overflow-hidden"
+          className="rounded-3xl bg-slate-950 border border-slate-800 p-6 sm:p-8 backdrop-blur-2xl shadow-2xl font-mono text-xs sm:text-sm overflow-hidden"
         >
-          <div className="flex items-center justify-between pb-4 border-b border-slate-800/80 mb-6">
+          <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-6 flex-wrap gap-2">
             <div className="flex items-center gap-2">
-              <Terminal className="w-4 h-4 text-cyan-400" />
-              <span className="text-slate-300 font-semibold text-sm">vocabflow_architecture_pipeline.json</span>
+              <Terminal className="w-5 h-5 text-cyan-400" />
+              <span className="text-slate-200 font-semibold text-sm sm:text-base">vocabflow_architecture_pipeline.json</span>
             </div>
-            <span className="text-[11px] text-emerald-400 bg-emerald-950/60 px-2.5 py-0.5 rounded border border-emerald-800/40">
-              STATUS: PRODUCTION DEPLOYED
+            <span className="text-xs text-emerald-400 bg-emerald-950/80 px-3 py-1 rounded-md border border-emerald-800/60 font-bold">
+              TRẠNG THÁI: ĐÃ TRIỂN KHAI PRODUCTION
             </span>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-slate-300">
-            <div className="space-y-2 bg-slate-900/60 p-4 rounded-xl border border-slate-800/60">
-              <div className="text-cyan-400 font-bold">// Edge & Microservice Routing</div>
-              <div>1. User Request -&gt; Cloudflare Edge Workers (Turnstile DDoS Filter)</div>
-              <div>2. Static Assets -&gt; Cloudflare Pages CDN (TTFB &lt; 30ms)</div>
-              <div>3. Media Streaming -&gt; Cloudflare R2 (Zero Egress Costs)</div>
-              <div>4. Dynamic API -&gt; GCP Cloud Run (Docker Auto-scale 0..100)</div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-slate-200">
+            <div className="space-y-2.5 bg-slate-900/80 p-4 rounded-xl border border-slate-800">
+              <div className="text-cyan-300 font-bold">// Định Tuyến Edge & Microservices</div>
+              <div>1. Yêu cầu người dùng -&gt; Cloudflare Edge Workers (Turnstile DDoS Filter)</div>
+              <div>2. Tài nguyên tĩnh -&gt; Cloudflare Pages CDN (TTFB &lt; 30ms)</div>
+              <div>3. Luồng Media Video -&gt; Cloudflare R2 (Chi phí Egress $0)</div>
+              <div>4. Dynamic API Backend -&gt; GCP Cloud Run (Docker Auto-scale 0..100)</div>
             </div>
 
-            <div className="space-y-2 bg-slate-900/60 p-4 rounded-xl border border-slate-800/60">
-              <div className="text-purple-400 font-bold">// Security, Caching & Data Layer</div>
-              <div>5. Auth JWT & Storage -&gt; Supabase PostgreSQL + Row Level Security</div>
-              <div>6. Caching & Rate Limit -&gt; Upstash Redis (Sliding Window Algorithm)</div>
-              <div>7. Secrets & Keys -&gt; GCP Secret Manager (Zero Code Secrets)</div>
-              <div>8. Realtime Error Logs -&gt; Sentry + GitHub Actions CI/CD Pipeline</div>
+            <div className="space-y-2.5 bg-slate-900/80 p-4 rounded-xl border border-slate-800">
+              <div className="text-purple-300 font-bold">// Bảo Mật, Caching & Cơ Sở Dữ Liệu</div>
+              <div>5. Xác thực JWT & Database -&gt; Supabase PostgreSQL + Row Level Security</div>
+              <div>6. Bộ nhớ đệm & Chống Spam -&gt; Upstash Redis (Sliding Window Algorithm)</div>
+              <div>7. Quản lý Secret & Key -&gt; GCP Secret Manager</div>
+              <div>8. Giám sát lỗi realtime -&gt; Sentry + GitHub Actions CI/CD Pipeline</div>
             </div>
           </div>
         </motion.div>

@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Rocket, ExternalLink, ShieldCheck, Zap, Cloud, Database, Lock, CheckCircle2, ChevronRight, X, Cpu, Server } from 'lucide-react';
+import { Rocket, ShieldCheck, Zap, Cloud, CheckCircle2, ChevronRight, X, Cpu } from 'lucide-react';
 
 interface Project {
   id: string;
@@ -194,6 +194,19 @@ const extraProjects: Project[] = [
 export default function FeaturedProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
+  // Lock background scroll when modal is open to prevent background bleed/scroll bug
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedProject]);
+
   return (
     <section id="projects" className="py-24 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -204,9 +217,9 @@ export default function FeaturedProjectsSection() {
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-cyan-500/30 text-cyan-300 text-xs font-mono backdrop-blur-md"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-cyan-500/40 text-cyan-300 text-xs sm:text-sm font-mono backdrop-blur-md"
           >
-            <Rocket className="w-3.5 h-3.5 text-cyan-400" />
+            <Rocket className="w-4 h-4 text-cyan-400" />
             <span>Dự Án Tiêu Biểu</span>
           </motion.div>
 
@@ -215,7 +228,7 @@ export default function FeaturedProjectsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight"
+            className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight"
           >
             Các Sản Phẩm{' '}
             <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
@@ -228,7 +241,7 @@ export default function FeaturedProjectsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base"
+            className="text-slate-300 max-w-2xl mx-auto text-base sm:text-lg font-light"
           >
             Những hệ thống thực tế minh chứng cho năng lực thiết kế Cloud-Native, Microservices đa ngôn ngữ và xử lý dữ liệu phức tạp.
           </motion.p>
@@ -244,7 +257,7 @@ export default function FeaturedProjectsSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.15 }}
               onClick={() => setSelectedProject(project)}
-              className="relative group rounded-3xl bg-slate-950/70 border border-slate-800/80 p-7 backdrop-blur-xl hover:border-cyan-400/60 transition-all duration-500 cursor-pointer shadow-xl hover:shadow-cyan-500/20 hover:-translate-y-2 flex flex-col justify-between overflow-hidden"
+              className="relative group rounded-3xl bg-slate-950/80 border border-slate-800 p-7 backdrop-blur-xl hover:border-cyan-400/60 transition-all duration-500 cursor-pointer shadow-xl hover:shadow-cyan-500/20 hover:-translate-y-2 flex flex-col justify-between overflow-hidden"
             >
               {/* Star Light Hover Glow Effect Background */}
               <div className="absolute -inset-px rounded-3xl bg-gradient-to-r from-cyan-500/0 via-cyan-500/20 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
@@ -252,40 +265,40 @@ export default function FeaturedProjectsSection() {
               <div className="space-y-4 relative z-10">
                 {/* Badge & Category */}
                 <div className="flex items-center justify-between gap-2">
-                  <span className={`px-3 py-1 rounded-full text-xs font-mono font-semibold text-space-bg bg-gradient-to-r ${project.badgeColor} shadow-md`}>
+                  <span className={`px-3 py-1 rounded-full text-xs font-mono font-bold text-space-bg bg-gradient-to-r ${project.badgeColor} shadow-md`}>
                     {project.badge}
                   </span>
-                  <span className="text-[11px] font-mono text-cyan-400/80 bg-cyan-950/40 px-2.5 py-1 rounded-lg border border-cyan-800/30">
+                  <span className="text-xs font-mono text-cyan-300 bg-cyan-950/60 px-3 py-1 rounded-lg border border-cyan-700/40 font-semibold">
                     {project.category}
                   </span>
                 </div>
 
                 {/* Title & Tagline */}
                 <div>
-                  <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors flex items-center gap-2">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-cyan-300 transition-colors flex items-center gap-2">
                     {project.title}
                     <ChevronRight className="w-5 h-5 text-cyan-400 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                   </h3>
-                  <p className="text-xs font-mono text-cyan-400/90 mt-1">
+                  <p className="text-xs sm:text-sm font-mono text-cyan-300/90 mt-1 font-medium">
                     {project.tagline}
                   </p>
                 </div>
 
                 {/* Description */}
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
+                <p className="text-sm text-slate-200 leading-relaxed font-light">
                   {project.description}
                 </p>
 
                 {/* Architecture Highlights Bullet list */}
-                <div className="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800/60 space-y-2">
-                  <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                    <Zap className="w-3.5 h-3.5 text-yellow-400" />
+                <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2.5">
+                  <div className="text-xs font-mono text-cyan-300 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                    <Zap className="w-4 h-4 text-yellow-400" />
                     Đặc điểm kiến trúc nổi bật:
                   </div>
-                  <ul className="space-y-1.5 text-xs text-slate-300">
+                  <ul className="space-y-2 text-xs sm:text-sm text-slate-200">
                     {project.architectureHighlights.slice(0, 3).map((highlight, hIdx) => (
                       <li key={hIdx} className="flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-1.5 flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-2 flex-shrink-0" />
                         <span className="line-clamp-2">{highlight}</span>
                       </li>
                     ))}
@@ -294,12 +307,12 @@ export default function FeaturedProjectsSection() {
               </div>
 
               {/* Bottom Tech Stack Tags */}
-              <div className="pt-6 relative z-10 flex flex-wrap items-center justify-between gap-3 border-t border-slate-800/80 mt-6">
+              <div className="pt-6 relative z-10 flex flex-wrap items-center justify-between gap-3 border-t border-slate-800 mt-6">
                 <div className="flex flex-wrap gap-1.5">
                   {project.techStack.map((tech) => (
                     <span
                       key={tech}
-                      className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-[11px] font-mono text-slate-300"
+                      className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-xs font-mono text-slate-200 font-medium"
                     >
                       {tech}
                     </span>
@@ -308,9 +321,9 @@ export default function FeaturedProjectsSection() {
 
                 <button
                   onClick={() => setSelectedProject(project)}
-                  className="text-xs font-semibold font-mono text-cyan-400 hover:text-cyan-300 flex items-center gap-1 group-hover:underline"
+                  className="text-xs sm:text-sm font-bold font-mono text-cyan-400 hover:text-cyan-300 flex items-center gap-1 group-hover:underline"
                 >
-                  Xem chi tiết &rarr;
+                  Xem Chi Tiết &rarr;
                 </button>
               </div>
             </motion.div>
@@ -320,8 +333,8 @@ export default function FeaturedProjectsSection() {
         {/* Additional Projects Section */}
         <div className="space-y-6">
           <div className="flex items-center gap-3">
-            <h3 className="text-xl font-bold text-white flex items-center gap-2">
-              <Cpu className="w-5 h-5 text-purple-400" />
+            <h3 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+              <Cpu className="w-6 h-6 text-purple-400" />
               Các Dự Án Thực Chiến Khác
             </h3>
             <div className="h-[1px] flex-1 bg-slate-800" />
@@ -336,23 +349,23 @@ export default function FeaturedProjectsSection() {
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
                 onClick={() => setSelectedProject(project)}
-                className="p-5 rounded-2xl bg-slate-950/60 border border-slate-800/80 hover:border-purple-500/40 transition-all cursor-pointer backdrop-blur-md group hover:-translate-y-1"
+                className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-purple-500/50 transition-all cursor-pointer backdrop-blur-md group hover:-translate-y-1"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold text-space-bg bg-gradient-to-r ${project.badgeColor}`}>
+                    <span className={`px-2.5 py-0.5 rounded-full text-xs font-mono font-bold text-space-bg bg-gradient-to-r ${project.badgeColor}`}>
                       {project.badge}
                     </span>
                   </div>
                   <h4 className="text-base font-bold text-white group-hover:text-purple-300 transition-colors">
                     {project.title}
                   </h4>
-                  <p className="text-xs text-slate-400 leading-relaxed font-light line-clamp-2">
+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light line-clamp-2">
                     {project.description}
                   </p>
                   <div className="flex flex-wrap gap-1 pt-1">
                     {project.techStack.map((tech) => (
-                      <span key={tech} className="px-2 py-0.5 rounded bg-slate-900 text-[10px] text-slate-400 font-mono">
+                      <span key={tech} className="px-2 py-0.5 rounded bg-slate-900 text-xs text-slate-300 font-mono">
                         {tech}
                       </span>
                     ))}
@@ -365,56 +378,57 @@ export default function FeaturedProjectsSection() {
 
       </div>
 
-      {/* Project Detail Modal */}
+      {/* Project Detail Modal - Fixed z-[100] & Solid Dark Backdrop & Scroll Lock */}
       <AnimatePresence>
         {selectedProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-xl">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/95 backdrop-blur-2xl">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-3xl bg-slate-950 border border-slate-800 p-6 sm:p-8 backdrop-blur-2xl shadow-2xl space-y-6"
+              className="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-3xl bg-slate-950 border border-slate-700/80 p-6 sm:p-8 backdrop-blur-2xl shadow-2xl space-y-6 scrollbar-thin"
             >
               {/* Close Button */}
               <button
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-5 right-5 p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 transition-colors"
+                className="absolute top-5 right-5 p-2.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-300 hover:text-white hover:border-cyan-400 transition-colors z-20"
+                aria-label="Đóng cửa sổ"
               >
                 <X className="w-5 h-5" />
               </button>
 
               {/* Modal Header */}
-              <div className="space-y-2">
-                <span className={`px-3 py-1 rounded-full text-xs font-mono font-semibold text-space-bg bg-gradient-to-r ${selectedProject.badgeColor}`}>
+              <div className="space-y-2 pr-10">
+                <span className={`px-3.5 py-1 rounded-full text-xs font-mono font-bold text-space-bg bg-gradient-to-r ${selectedProject.badgeColor}`}>
                   {selectedProject.badge}
                 </span>
-                <h3 className="text-2xl font-extrabold text-white">
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
                   {selectedProject.title}
                 </h3>
-                <p className="text-sm font-mono text-cyan-400">
+                <p className="text-sm font-mono text-cyan-300 font-semibold">
                   {selectedProject.tagline}
                 </p>
               </div>
 
               {/* Overview */}
               <div className="space-y-2">
-                <h4 className="text-xs font-mono text-slate-400 uppercase tracking-wider">
+                <h4 className="text-xs font-mono text-slate-300 uppercase tracking-wider font-bold">
                   Tổng Quan Hệ Thống
                 </h4>
-                <p className="text-sm text-slate-300 leading-relaxed font-light">
+                <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-light">
                   {selectedProject.details.overview}
                 </p>
               </div>
 
               {/* Architecture Details */}
-              <div className="space-y-2">
-                <h4 className="text-xs font-mono text-cyan-400 uppercase tracking-wider flex items-center gap-1.5">
-                  <Cloud className="w-4 h-4" />
+              <div className="space-y-3">
+                <h4 className="text-xs font-mono text-cyan-300 uppercase tracking-wider flex items-center gap-2 font-bold">
+                  <Cloud className="w-4 h-4 text-cyan-400" />
                   Chi Tiết Kiến Trúc Kỹ Thuật
                 </h4>
-                <div className="space-y-2">
+                <div className="space-y-2.5">
                   {selectedProject.architectureHighlights.map((arch, aIdx) => (
-                    <div key={aIdx} className="p-3 rounded-xl bg-slate-900/80 border border-slate-800/80 text-xs text-slate-200">
+                    <div key={aIdx} className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs sm:text-sm text-slate-200 font-normal">
                       {arch}
                     </div>
                   ))}
@@ -422,35 +436,35 @@ export default function FeaturedProjectsSection() {
               </div>
 
               {/* Outcomes */}
-              <div className="space-y-2">
-                <h4 className="text-xs font-mono text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+              <div className="space-y-2.5">
+                <h4 className="text-xs font-mono text-emerald-400 uppercase tracking-wider flex items-center gap-2 font-bold">
                   <CheckCircle2 className="w-4 h-4" />
                   Kết Quả Đạt Được
                 </h4>
-                <ul className="space-y-1.5 text-xs text-slate-300">
+                <ul className="space-y-2 text-xs sm:text-sm text-slate-200">
                   {selectedProject.details.outcomes.map((out, oIdx) => (
                     <li key={oIdx} className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>{out}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* Modal Footer Tech Badges */}
-              <div className="pt-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-4">
+              {/* Modal Footer Tech Badges & Close Button */}
+              <div className="pt-5 border-t border-slate-800 flex flex-wrap items-center justify-between gap-4">
                 <div className="flex flex-wrap gap-1.5">
                   {selectedProject.techStack.map((tech) => (
-                    <span key={tech} className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-xs font-mono text-slate-300">
+                    <span key={tech} className="px-3 py-1 rounded-md bg-slate-900 border border-slate-800 text-xs font-mono text-slate-200 font-medium">
                       {tech}
                     </span>
                   ))}
                 </div>
                 <button
                   onClick={() => setSelectedProject(null)}
-                  className="px-5 py-2 rounded-xl bg-cyan-500 text-space-bg font-bold text-xs hover:bg-cyan-400 transition-colors"
+                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-space-bg font-bold text-xs sm:text-sm hover:opacity-90 transition-opacity"
                 >
-                  Đóng
+                  Đóng Cửa Sổ
                 </button>
               </div>
             </motion.div>

@@ -85,7 +85,7 @@ export default function HeroSection() {
               </motion.div>
             </div>
 
-            {/* Title with glow effect */}
+            {/* Title with glow effect - Changed "Hi there, I'm" to "Xin chào, tôi là" */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -93,7 +93,7 @@ export default function HeroSection() {
               className="space-y-3"
             >
               <h1 className="text-4xl sm:text-6xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
-                Hi there, I&apos;m{' '}
+                Xin chào, tôi là{' '}
                 <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent glow-text-cyan">
                   Giang Thanh Tùng
                 </span>
@@ -125,15 +125,15 @@ export default function HeroSection() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1"
             >
-              <span className="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs sm:text-sm font-mono text-cyan-300 flex items-center gap-2 shadow-md">
+              <span className="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs sm:text-sm font-mono text-cyan-300 flex items-center gap-2 shadow-md font-semibold">
                 <Cloud className="w-4 h-4 text-cyan-400" />
                 19 Cloud Services
               </span>
-              <span className="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs sm:text-sm font-mono text-purple-300 flex items-center gap-2 shadow-md">
+              <span className="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs sm:text-sm font-mono text-purple-300 flex items-center gap-2 shadow-md font-semibold">
                 <Cpu className="w-4 h-4 text-purple-400" />
                 Microservices & DRM
               </span>
-              <span className="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs sm:text-sm font-mono text-blue-300 flex items-center gap-2 shadow-md">
+              <span className="px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs sm:text-sm font-mono text-blue-300 flex items-center gap-2 shadow-md font-semibold">
                 <Database className="w-4 h-4 text-blue-400" />
                 Data Mining & AI
               </span>
@@ -196,7 +196,7 @@ export default function HeroSection() {
               <a
                 href="mailto:gthanhtungg24@gmail.com"
                 className="p-3 rounded-xl bg-slate-900/80 border border-slate-700 text-slate-300 hover:text-cyan-400 hover:border-cyan-500/50 transition-all hover:scale-110"
-                aria-label="Send Email"
+                aria-label="Gửi Email"
               >
                 <Mail className="w-5 h-5" />
               </a>
@@ -222,7 +222,7 @@ export default function HeroSection() {
                   </div>
                   <span className="text-xs font-mono text-cyan-300 flex items-center gap-1.5 font-semibold">
                     <ShieldCheck className="w-4 h-4 text-cyan-400" />
-                    system_status: online
+                    trang_thai: hoat_dong
                   </span>
                 </div>
 
