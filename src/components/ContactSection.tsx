@@ -32,13 +32,20 @@ export default function ContactSection() {
         body: JSON.stringify(formData),
       });
 
-      const data = await res.json();
+      let data: any = null;
+      try {
+        data = await res.json();
+      } catch (jsonErr) {
+        // Trình duyệt nhận response dạng text/HTML (ví dụ lỗi Cloudflare 500 / DEPLOYMENT_PAUSED)
+      }
 
-      if (res.ok && data.success) {
+      if (res.ok && data?.success) {
         setSubmitted(true);
         setFormData({ name: '', email: '', subject: '', message: '' });
       } else {
-        setErrorMessage(data.error || 'Đã xảy ra lỗi trong quá trình gửi tin nhắn. Vui lòng thử lại sau.');
+        setErrorMessage(
+          data?.error || `Lỗi máy chủ Cloudflare (Mã HTTP ${res.status}). Vui lòng kiểm tra lại cấu hình RESEND_API_KEY trên Cloudflare Dashboard.`
+        );
       }
     } catch (err) {
       setErrorMessage('Không thể kết nối đến máy chủ. Vui lòng kiểm tra lại kết nối mạng.');
