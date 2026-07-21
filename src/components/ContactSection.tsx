@@ -2,11 +2,13 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Send, Phone, MapPin, CheckCircle2, MessageSquare, Sparkles } from 'lucide-react';
+import { Mail, Send, Phone, MapPin, CheckCircle2, MessageSquare, Sparkles, Loader2, AlertCircle } from 'lucide-react';
 import { FacebookIcon, GithubIcon, LinkedinIcon } from '@/components/Icons';
 
 export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -14,16 +16,37 @@ export default function ContactSection() {
     message: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.name && formData.email && formData.message) {
-      setSubmitted(true);
-      setTimeout(() => {
-        setSubmitted(false);
+    if (!formData.name || !formData.email || !formData.message) return;
+
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setSubmitted(true);
         setFormData({ name: '', email: '', subject: '', message: '' });
-      }, 5000);
+      } else {
+        setErrorMessage(data.error || 'Đã xảy ra lỗi trong quá trình gửi tin nhắn. Vui lòng thử lại sau.');
+      }
+    } catch (err) {
+      setErrorMessage('Không thể kết nối đến máy chủ. Vui lòng kiểm tra lại kết nối mạng.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
+
 
   return (
     <section id="contact" className="py-24 relative z-10">
@@ -145,16 +168,27 @@ export default function ContactSection() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {errorMessage && (
+                    <div className="p-4 rounded-xl bg-red-950/60 border border-red-500/40 text-red-300 text-xs flex items-start gap-3">
+                      <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+                      <div className="space-y-1">
+                        <div className="font-semibold text-red-200">Gửi tin nhắn không thành công</div>
+                        <div>{errorMessage}</div>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label className="text-xs font-mono text-slate-300">Họ và Tên</label>
                       <input
                         type="text"
                         required
+                        disabled={isSubmitting}
                         placeholder="Nguyễn Văn A"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-cyan-500 transition-colors"
+                        className="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-cyan-500 transition-colors disabled:opacity-50"
                       />
                     </div>
                     <div className="space-y-1.5">
@@ -162,10 +196,11 @@ export default function ContactSection() {
                       <input
                         type="email"
                         required
+                        disabled={isSubmitting}
                         placeholder="example@domain.com"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-cyan-500 transition-colors"
+                        className="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-cyan-500 transition-colors disabled:opacity-50"
                       />
                     </div>
                   </div>
@@ -174,10 +209,11 @@ export default function ContactSection() {
                     <label className="text-xs font-mono text-slate-300">Tiêu đề tin nhắn</label>
                     <input
                       type="text"
+                      disabled={isSubmitting}
                       placeholder="Hợp tác phát triển ứng dụng Cloud-Native / Cơ hội việc làm..."
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-cyan-500 transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-cyan-500 transition-colors disabled:opacity-50"
                     />
                   </div>
 
@@ -186,19 +222,30 @@ export default function ContactSection() {
                     <textarea
                       rows={4}
                       required
+                      disabled={isSubmitting}
                       placeholder="Mô tả nội dung ý tưởng hoặc yêu cầu dự án..."
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-cyan-500 transition-colors resize-none"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-cyan-500 transition-colors resize-none disabled:opacity-50"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-space-bg font-bold text-sm shadow-lg shadow-cyan-500/20 hover:opacity-95 transition-opacity flex items-center justify-center gap-2"
+                    disabled={isSubmitting}
+                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-space-bg font-bold text-sm shadow-lg shadow-cyan-500/20 hover:opacity-95 transition-opacity flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    <Send className="w-4 h-4" />
-                    Gửi Tin Nhắn Ngay
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Đang gửi tin nhắn...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        Gửi Tin Nhắn Ngay
+                      </>
+                    )}
                   </button>
                 </form>
               )}
