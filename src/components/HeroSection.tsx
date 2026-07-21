@@ -160,7 +160,7 @@ export default function HeroSection() {
 
               {/* Secondary Button */}
               <a
-                href="mailto:gthanhtungg24@gmail.com"
+                href="mailto:gthanhtung.work@gmail.com"
                 className="w-full sm:w-auto px-8 py-4 rounded-xl text-sm sm:text-base font-semibold text-cyan-300 bg-slate-900/90 border border-cyan-500/50 hover:border-cyan-400 hover:bg-cyan-950/40 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-md hover:scale-105 active:scale-95 shadow-lg shadow-slate-950/50"
               >
                 <Download className="w-5 h-5 text-cyan-400" />
@@ -194,7 +194,7 @@ export default function HeroSection() {
                 <FacebookIcon className="w-5 h-5" />
               </a>
               <a
-                href="mailto:gthanhtungg24@gmail.com"
+                href="mailto:gthanhtung.work@gmail.com"
                 className="p-3 rounded-xl bg-slate-900/80 border border-slate-700 text-slate-300 hover:text-cyan-400 hover:border-cyan-500/50 transition-all hover:scale-110"
                 aria-label="Gửi Email"
               >
