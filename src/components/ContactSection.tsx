@@ -112,7 +112,7 @@ export default function ContactSection() {
 
               <div className="space-y-4 text-sm">
                 <a
-                  href="mailto:gthanhtungg24@gmail.com"
+                  href="mailto:gthanhtung.work@gmail.com"
                   className="flex items-center gap-4 p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition-all text-slate-300 hover:text-cyan-400 group"
                 >
                   <div className="p-2.5 rounded-lg bg-cyan-950/80 text-cyan-400 group-hover:scale-110 transition-transform">
@@ -120,7 +120,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <div className="text-xs text-slate-400 font-mono">Direct Email</div>
-                    <div className="font-semibold text-slate-100">gthanhtungg24@gmail.com</div>
+                    <div className="font-semibold text-slate-100">gthanhtung.work@gmail.com</div>
                   </div>
                 </a>
 
