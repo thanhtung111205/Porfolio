@@ -19,7 +19,7 @@ export default function FeaturedProjectsSection() {
       tagline: t.projects.vocabflowTagline,
       description: t.projects.vocabflowDesc,
       keyHighlight: 'Tối ưu chi phí $0 vận hành với 19 Cloud Services toàn cầu.',
-      videoUrl: '/project/CloudFlashCard.mp4',
+      videoUrl: 'https://drive.google.com/file/d/1S0SlfuRzzjBZ73ZSh7tm1HSqINSXOqNx/preview',
       githubUrl: 'https://github.com/thanhtung111205',
       architectureHighlights: [
         t.projects.vocabflowArch1,
@@ -50,7 +50,7 @@ export default function FeaturedProjectsSection() {
       tagline: t.projects.drmTagline,
       description: t.projects.drmDesc,
       keyHighlight: 'Bảo vệ bản quyền video 100% kết hợp AI Computer Vision.',
-      videoUrl: '/project/DRM-LMS.mp4',
+      videoUrl: 'https://drive.google.com/file/d/1MYUawPtVpiQvCXEHRX3i2bo60QJqxk7H/preview',
       githubUrl: 'https://github.com/thanhtung111205',
       architectureHighlights: [
         t.projects.drmArch1,

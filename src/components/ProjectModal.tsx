@@ -229,12 +229,22 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                       <span className="text-slate-500 dark:text-slate-400 font-normal">Full HD Video</span>
                     </div>
                     <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700/80 bg-black shadow-2xl">
-                      <video
-                        src={project.videoUrl}
-                        controls
-                        controlsList="nodownload"
-                        className="w-full aspect-video object-cover rounded-2xl"
-                      />
+                      {project.videoUrl.includes('drive.google.com') || project.videoUrl.includes('/preview') ? (
+                        <iframe
+                          src={project.videoUrl}
+                          title={`${project.title} Video Demo`}
+                          className="w-full aspect-video rounded-2xl border-0"
+                          allow="autoplay; encrypted-media; picture-in-picture"
+                          allowFullScreen
+                        />
+                      ) : (
+                        <video
+                          src={project.videoUrl}
+                          controls
+                          controlsList="nodownload"
+                          className="w-full aspect-video object-cover rounded-2xl"
+                        />
+                      )}
                     </div>
                   </div>
                 )}
