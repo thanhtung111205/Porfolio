@@ -24,6 +24,7 @@ const config: Config = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'cyber-grid': 'linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px)',
         'hero-gradient': 'radial-gradient(circle at 50% 30%, rgba(0, 243, 255, 0.15), rgba(168, 85, 247, 0.08) 40%, rgba(3, 7, 18, 0.95) 75%)',
+        'hero-gradient-light': 'radial-gradient(circle at 50% 30%, rgba(2, 132, 199, 0.12), rgba(124, 58, 237, 0.06) 40%, rgba(248, 250, 252, 0.95) 75%)',
       },
       animation: {
         'float-slow': 'float 6s ease-in-out infinite',

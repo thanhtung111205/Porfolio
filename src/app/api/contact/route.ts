@@ -3,24 +3,73 @@ import { Resend } from 'resend';
 
 export const dynamic = 'force-dynamic';
 
-export async function POST(request: Request) {
+// In-memory rate limiting map for Cloudflare Worker instance
+const rateLimitMap = new Map<string, number[]>();
 
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const windowMs = 5 * 60 * 1000; // 5 minutes
+  const maxRequests = 3;
+
+  const timestamps = rateLimitMap.get(ip) || [];
+  const validTimestamps = timestamps.filter((ts) => now - ts < windowMs);
+
+  if (validTimestamps.length >= maxRequests) {
+    return true;
+  }
+
+  validTimestamps.push(now);
+  rateLimitMap.set(ip, validTimestamps);
+  return false;
+}
+
+export async function POST(request: Request) {
   try {
+    const clientIp =
+      request.headers.get('cf-connecting-ip') ||
+      request.headers.get('x-forwarded-for') ||
+      '127.0.0.1';
+
+    // 1. Check Rate Limit
+    if (isRateLimited(clientIp)) {
+      return NextResponse.json(
+        { success: false, error: 'Bạn đã gửi quá nhiều yêu cầu. Vui lòng thử lại sau 5 phút.' },
+        { status: 429 }
+      );
+    }
+
     const apiKey = process.env.RESEND_API_KEY;
 
     if (!apiKey || apiKey === 're_your_api_key_here') {
       return NextResponse.json(
         {
           success: false,
-          error: 'RESEND_API_KEY chưa được cấu hình. Vui lòng cập nhật API Key thật trong file .env.local',
+          error: 'RESEND_API_KEY chưa được cấu hình. Vui lòng cập nhật API Key trong .env.local',
         },
         { status: 400 }
       );
     }
 
-    const resend = new Resend(apiKey);
     const body = await request.json();
-    const { name, email, subject, message } = body;
+    const { name, email, subject, message, website_hp, form_timestamp } = body;
+
+    // 2. Honeypot check: If honeypot is filled, silent success response to trick bots
+    if (website_hp) {
+      console.warn(`[Anti-Spam] Honeypot triggered by IP: ${clientIp}`);
+      return NextResponse.json({
+        success: true,
+        message: 'Tin nhắn đã được gửi thành công!',
+      });
+    }
+
+    // 3. Timestamp check: If filled faster than 2.5 seconds, reject as bot
+    if (form_timestamp && Date.now() - Number(form_timestamp) < 2500) {
+      console.warn(`[Anti-Spam] Timestamp check failed (<2.5s) from IP: ${clientIp}`);
+      return NextResponse.json(
+        { success: false, error: 'Phát hiện thao tác tự động nghi vấn spam.' },
+        { status: 400 }
+      );
+    }
 
     if (!name || !email || !message) {
       return NextResponse.json(
@@ -29,6 +78,7 @@ export async function POST(request: Request) {
       );
     }
 
+    const resend = new Resend(apiKey);
     const emailSubject = subject?.trim()
       ? `[Portfolio Contact] ${subject}`
       : `[Portfolio Contact] Tin nhắn mới từ ${name}`;
@@ -59,7 +109,7 @@ export async function POST(request: Request) {
           <body>
             <div class="container">
               <div class="header">
-                <h2>📬 Tin Nhắn Liên Hệ Mới</h2>
+                <h2>📬 Tin Nhắn Liên Hệ Mới (Cloudflare Verified)</h2>
               </div>
               <div class="content">
                 <div class="field">
@@ -79,6 +129,10 @@ export async function POST(request: Request) {
                 <div class="field">
                   <div class="label">Nội dung chi tiết</div>
                   <div class="message-box">${message}</div>
+                </div>
+                <div class="field">
+                  <div class="label">IP Khách</div>
+                  <div class="value">${clientIp}</div>
                 </div>
               </div>
               <div class="footer">
