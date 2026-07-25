@@ -42,18 +42,20 @@ export const metadata: Metadata = {
   },
 };
 
+import Providers from '@/components/Providers';
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="vi" className="dark scroll-smooth">
+    <html lang="vi" className="dark scroll-smooth" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/AVA1.jpg" type="image/jpeg" />
       </head>
-      <body className="bg-[#030712] text-slate-100 antialiased selection:bg-cyan-500 selection:text-slate-950">
-        {children}
+      <body className="bg-slate-950 text-slate-100 dark:bg-[#030712] dark:text-slate-100 transition-colors duration-300 antialiased selection:bg-cyan-500 selection:text-slate-950">
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

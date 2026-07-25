@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useTheme } from '@/context/ThemeContext';
 
 interface Star {
   x: number;
@@ -13,10 +14,12 @@ interface Star {
   vy: number;
 }
 
-const STAR_COLORS = ['#ffffff', '#00f3ff', '#3b82f6', '#a855f7', '#38bdf8'];
+const DARK_COLORS = ['#ffffff', '#00f3ff', '#3b82f6', '#a855f7', '#38bdf8'];
+const LIGHT_COLORS = ['#0284c7', '#2563eb', '#7c3aed', '#0891b2', '#4f46e5'];
 
 export default function ParticlesBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -29,10 +32,13 @@ export default function ParticlesBackground() {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
+    const isMobile = width < 768;
+    const colors = theme === 'light' ? LIGHT_COLORS : DARK_COLORS;
+
     const mouse = {
       x: -1000,
       y: -1000,
-      radius: 140,
+      radius: isMobile ? 90 : 150,
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -57,13 +63,13 @@ export default function ParticlesBackground() {
     window.addEventListener('touchmove', handleTouchMove);
     window.addEventListener('resize', handleResize);
 
-    // Create Starry Night Particles
-    const starCount = Math.floor((width * height) / 12000);
-    const stars: Star[] = Array.from({ length: Math.max(70, starCount) }, () => ({
+    // Create Adaptive Density Particles
+    const targetCount = isMobile ? 30 : Math.min(80, Math.floor((width * height) / 14000));
+    const stars: Star[] = Array.from({ length: targetCount }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
       size: Math.random() * 2 + 0.8,
-      color: STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)],
+      color: colors[Math.floor(Math.random() * colors.length)],
       alpha: Math.random() * 0.7 + 0.3,
       alphaSpeed: (Math.random() * 0.02 + 0.005) * (Math.random() > 0.5 ? 1 : -1),
       vx: (Math.random() - 0.5) * 0.3,
@@ -73,16 +79,18 @@ export default function ParticlesBackground() {
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Draw Star Connections (Constellations)
+      const lineColor = theme === 'light' ? 'rgba(2, 132, 199, ' : 'rgba(0, 243, 255, ';
+
+      // Draw Star Connections
       for (let i = 0; i < stars.length; i++) {
         for (let j = i + 1; j < stars.length; j++) {
           const dx = stars[i].x - stars[j].x;
           const dy = stars[i].y - stars[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
 
-          if (dist < 100) {
-            const lineAlpha = (1 - dist / 100) * 0.15;
-            ctx.strokeStyle = `rgba(0, 243, 255, ${lineAlpha})`;
+          if (dist < 110) {
+            const lineAlpha = (1 - dist / 110) * 0.15;
+            ctx.strokeStyle = `${lineColor}${lineAlpha})`;
             ctx.lineWidth = 0.6;
             ctx.beginPath();
             ctx.moveTo(stars[i].x, stars[i].y);
@@ -102,7 +110,7 @@ export default function ParticlesBackground() {
 
         if (dist < mouse.radius) {
           const lineAlpha = (1 - dist / mouse.radius) * 0.4;
-          ctx.strokeStyle = `rgba(0, 243, 255, ${lineAlpha})`;
+          ctx.strokeStyle = `${lineColor}${lineAlpha})`;
           ctx.lineWidth = 0.8;
           ctx.beginPath();
           ctx.moveTo(star.x, star.y);
@@ -148,12 +156,12 @@ export default function ParticlesBackground() {
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [theme]);
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0 opacity-30"
+      className="fixed inset-0 pointer-events-none z-0 opacity-40 dark:opacity-30 transition-opacity duration-300"
     />
   );
 }
