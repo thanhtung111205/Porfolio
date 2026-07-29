@@ -18,6 +18,7 @@ export const en: Translations = {
     desc: 'Full-Stack Developer | Cloud-Native & System Architecture Enthusiast. Specializing in $0 serverless infrastructure, high-concurrency Microservices, and Data Mining applications.',
     ctaProjects: 'Explore Projects',
     ctaContact: 'Contact',
+    ctaDownloadCV: 'Download CV',
     servicesBadge: '19 Cloud Services',
     microservicesBadge: 'Microservices & DRM',
     dataMiningBadge: 'Data Mining & AI',

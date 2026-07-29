@@ -16,6 +16,7 @@ export const vi = {
     desc: 'Full-Stack Developer | Cloud-Native & System Architecture Enthusiast. Chuyên thiết kế hạ tầng Serverless 0$ vận hành, xây dựng Microservices chịu tải cao và ứng dụng Data Mining nâng cao trải nghiệm người dùng.',
     ctaProjects: 'Khám Phá Dự Án',
     ctaContact: 'Liên Hệ',
+    ctaDownloadCV: 'Tải CV',
     servicesBadge: '19 Cloud Services',
     microservicesBadge: 'Microservices & DRM',
     dataMiningBadge: 'Data Mining & AI',
