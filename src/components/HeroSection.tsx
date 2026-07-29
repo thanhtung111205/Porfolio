@@ -14,6 +14,9 @@ const typingTitles = [
   'Data Mining Researcher',
 ];
 
+const CV_DOWNLOAD_URL =
+  'https://drive.google.com/uc?export=download&id=1f-6BZpzIiHrDzOiHGVpmoKG1MbFLYKqJ';
+
 export default function HeroSection() {
   const { t } = useLanguage();
   const [titleIndex, setTitleIndex] = useState(0);
@@ -167,8 +170,21 @@ export default function HeroSection() {
                 href="#contact"
                 className="w-full sm:w-auto px-8 py-4 rounded-xl text-sm sm:text-base font-semibold text-cyan-600 dark:text-cyan-300 bg-slate-100 dark:bg-slate-900/90 border border-cyan-500/50 hover:border-cyan-400 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-md hover:scale-105 active:scale-95 shadow-lg shadow-slate-950/50"
               >
-                <Download className="w-5 h-5 text-cyan-500" />
+                <Mail className="w-5 h-5 text-cyan-500" />
                 <span>{t.hero.ctaContact}</span>
+              </a>
+
+              <a
+                href={CV_DOWNLOAD_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto relative group px-8 py-4 rounded-xl text-sm sm:text-base font-semibold text-white overflow-hidden shadow-xl shadow-purple-500/25 transition-all duration-300 hover:scale-105 active:scale-95"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-fuchsia-600 to-pink-600 group-hover:opacity-90 transition-opacity" />
+                <span className="relative flex items-center justify-center gap-2 font-mono">
+                  <Download className="w-5 h-5 group-hover:translate-y-0.5 transition-transform duration-300" />
+                  {t.hero.ctaDownloadCV}
+                </span>
               </a>
             </motion.div>
 
